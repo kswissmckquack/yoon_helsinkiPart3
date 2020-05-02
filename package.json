@@ -1,0 +1,28 @@
+{
+  "name": "phonebook",
+  "version": "1.0.0",
+  "description": "phonebook part 3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "phonebook"
+  },
+  "keywords": [
+    "phonebook"
+  ],
+  "author": "Kevin Yoon",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}

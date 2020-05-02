@@ -1,0 +1,1 @@
+web: node_index.js
