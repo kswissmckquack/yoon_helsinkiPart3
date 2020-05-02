@@ -6,6 +6,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('build'))
 
 morgan.token('body', function(req) {return JSON.stringify(req.body)})
 
@@ -28,6 +29,11 @@ let persons = [
     name:"enrique eglasias",
     phoneNumber:"040-99876",
     id:3
+  },
+  {
+    name:"wilmer valderahma",
+    phoneNumber:"001-11234",
+    id:4
   }
 ]
 
