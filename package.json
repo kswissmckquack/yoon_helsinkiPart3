@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "test",
-    "build:ui": "sudo rm -rf build && cd ../part2/2.phonebook/ && npm run build --prod && cp -r build ../../part3/",
+    "build:ui": "sudo rm -rf build && cd ../yoon_helsinkiFullStack/part2/2.phonebook/ && npm run build --prod && cp -r build ../../../part3/",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail",
