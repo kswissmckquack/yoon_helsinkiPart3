@@ -11,7 +11,7 @@ const password = process.argv[2]
 
 const url = `mongodb+srv://fullstack:${password}@cluster0-cfl2h.mongodb.net/phonebook-app?retryWrites=true&w=majority`
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const personSchema = new mongoose.Schema({
   name: String,

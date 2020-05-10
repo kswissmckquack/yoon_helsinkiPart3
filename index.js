@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const mongoose = require('mongoose')
 const app = express()
 const Person = require('./models/person')
 
@@ -12,27 +11,26 @@ app.use(express.static('build'))
 const errorHandler = (error, req, res, next) => {
   console.error(error.message)
   if(error.name === 'CastError') {
-    return res.status(400).send({error: 'malformatted id'})
+    return res.status(400).send({ error: 'malformatted id' })
   }
   if(error.name === 'ValidationError'){
-    return res.status(400).send({error: error.message})
+    return res.status(400).send({ error: error.message })
   }
   next(error)
 }
-// app.use(errorHandler)
+app.use(errorHandler)
 // logger
 morgan.token('body', function(req) {return JSON.stringify(req.body)})
 const logger = morgan(':body :method :url :status :res[content-length] - :response-time ms')
 app.use(logger)
 
-
 app.get('/', (req,res) => {
-  res.send(`<h1>Welcome My Friend</h1>`)
+  res.send('<h1>Welcome My Friend</h1>')
 })
 
 app.get('/api/persons', (req,res) => {
   Person.find({}).then(persons => {
-    res.json(persons.map(p=> p.toJSON()))
+    res.json(persons.map(p => p.toJSON()))
   })
 })
 
@@ -50,7 +48,7 @@ app.get('/api/persons/:id', (req,res, next) => {
       if(person){
         res.json(person.toJSON())
       } else {
-        response.status(404).end() //id valid format but no matching found
+        res.status(404).end() //id valid format but no matching found
       }
     })
     .catch(error => next(error))
@@ -58,28 +56,21 @@ app.get('/api/persons/:id', (req,res, next) => {
 
 app.post('/api/persons/', (req,res,next) => {
   const body = req.body
-
   const name = body.name
   const phoneNumber = body.phoneNumber
   const person = new Person({
-      name: name,
-      phoneNumber: phoneNumber
+    name: name,
+    phoneNumber: phoneNumber
   })
-
   if(!name){
     return res.status(400).json({
-      error: `name missing`
+      error: 'name missing'
     })
   } if (!phoneNumber){
     return res.status(400).json({
-      error: `phone number missing`
+      error: 'phone number missing'
     })
   }
-  // if(Person.find(p => p.name === name)) {
-  //   return res.status(400).json({
-  //     error: `names must be unique ${name} already exists`
-  //   })
-  // }
 
   person.save()
     .then(savedPerson => {
@@ -94,11 +85,11 @@ app.put('/api/persons/:id', (req, res, next) => {
   const name = body.name
   const phoneNumber = body.phoneNumber
   const person = {
-      name: name,
-      phoneNumber: phoneNumber
+    name: name,
+    phoneNumber: phoneNumber
   }
 
-  Person.findByIdAndUpdate(id, person, {new:true})
+  Person.findByIdAndUpdate(id, person, { new:true })
     .then(updatedPerson => {
       res.json(updatedPerson.toJSON())
     })
@@ -109,7 +100,7 @@ app.delete('/api/persons/:id', (req,res,next) => {
   const id = req.params.id
   console.log(id)
   Person.findByIdAndRemove(id)
-    .then(result => {
+    .then(res => {
       res.status(204).end()
     })
     .catch(error => next(error))
